@@ -1,0 +1,147 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-void: #07080c;
+  --color-panel: #0e0f16;
+  --color-panel-2: #141520;
+  --color-line: #2a2618;
+  --color-gold: #d9b45a;
+  --color-gold-bright: #f1d78a;
+  --color-gold-dim: #8c7438;
+  --color-ivory: #ece5d2;
+  --color-muted: #9b937e;
+  --color-faint: #6b6553;
+  /* Lane identities — validated for colour-blind separation on the dark surface. */
+  --color-lane-forecaster: #c3962c;
+  --color-lane-market: #5f97de;
+  --color-lane-actuary: #c46aa0;
+  --font-display: 'Cormorant Garamond', ui-serif, Georgia, serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  background: var(--color-void);
+  color: var(--color-ivory);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Starfield: three tiled layers of tiny radial dots, drifting slowly. */
+.starfield {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(217, 180, 90, 0.13), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(95, 151, 222, 0.05), transparent 70%),
+    var(--color-void);
+}
+.starfield::before,
+.starfield::after {
+  content: '';
+  position: absolute;
+  inset: -200px;
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, rgba(236, 229, 210, 0.55), transparent),
+    radial-gradient(1px 1px at 140px 80px, rgba(236, 229, 210, 0.35), transparent),
+    radial-gradient(1.5px 1.5px at 90px 160px, rgba(241, 215, 138, 0.5), transparent),
+    radial-gradient(1px 1px at 210px 210px, rgba(236, 229, 210, 0.3), transparent),
+    radial-gradient(1px 1px at 260px 40px, rgba(236, 229, 210, 0.4), transparent);
+  background-size: 300px 260px;
+  animation: drift 240s linear infinite;
+}
+.starfield::after {
+  background-size: 520px 470px;
+  opacity: 0.6;
+  animation-duration: 420s;
+}
+@keyframes drift {
+  to {
+    transform: translate3d(-300px, -130px, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .starfield::before,
+  .starfield::after {
+    animation: none;
+  }
+}
+
+.panel {
+  background: linear-gradient(180deg, rgba(20, 21, 32, 0.82), rgba(14, 15, 22, 0.82));
+  border: 1px solid var(--color-line);
+  border-radius: 14px;
+  backdrop-filter: blur(4px);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-gold-dim);
+}
+
+.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.prose-method h2 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--color-gold-bright);
+  margin: 2.2rem 0 0.6rem;
+}
+.prose-method p,
+.prose-method li {
+  color: var(--color-ivory);
+  line-height: 1.7;
+  opacity: 0.9;
+}
+.prose-method ul {
+  list-style: none;
+  padding: 0;
+}
+.prose-method li {
+  padding-left: 1.2rem;
+  position: relative;
+  margin: 0.35rem 0;
+}
+.prose-method li::before {
+  content: '◆';
+  position: absolute;
+  left: 0;
+  font-size: 0.55rem;
+  top: 0.55rem;
+  color: var(--color-gold-dim);
+}
+.prose-method code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: var(--color-gold-bright);
+  background: rgba(217, 180, 90, 0.08);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+}
+
+a {
+  color: inherit;
+}
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+  border-radius: 4px;
+}

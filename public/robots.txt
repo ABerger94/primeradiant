@@ -1,0 +1,4 @@
+# Unlisted until the record has something to show. To go public: delete these two lines,
+# remove the X-Robots-Tag header in vercel.json, and set VITE_PUBLIC_INDEXING=true.
+User-agent: *
+Disallow: /

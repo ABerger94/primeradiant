@@ -1,0 +1,44 @@
+{
+  "name": "prime-radiant",
+  "version": "1.0.0",
+  "description": "AI forecasting, run like psychohistory: predictions about systems, locked in public, scored without mercy.",
+  "scripts": {
+    "dev": "node pipeline/cli/migrate.js && vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node --test test/*.test.js",
+    "db:migrate": "node pipeline/cli/migrate.js",
+    "pipeline": "node pipeline/run.js",
+    "pipeline:dry": "node pipeline/run.js --dry-run",
+    "resolve": "node pipeline/cli/resolve.js",
+    "note": "node pipeline/cli/note.js",
+    "mule": "node pipeline/cli/mule.js",
+    "verify": "node pipeline/cli/verify.js",
+    "seed:demo": "node pipeline/cli/seed-demo.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ABerger94/primeradiant.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ABerger94/primeradiant/issues"
+  },
+  "homepage": "https://github.com/ABerger94/primeradiant#readme",
+  "dependencies": {
+    "@libsql/client": "^0.18.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^7.18.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.5",
+    "@vitejs/plugin-react": "^6.3.0",
+    "tailwindcss": "^4.3.5",
+    "vite": "^8.4.0"
+  },
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,34 @@
+# Fallback scheduler. If Milk runs the pipeline, disable this workflow so the two don't race
+# (the daily cap makes a double run harmless, but one engine room is cleaner).
+name: Daily pipeline
+on:
+  schedule:
+    - cron: '17 13 * * *' # 13:17 UTC daily
+  workflow_dispatch:
+    inputs:
+      only:
+        description: 'Steps to run (forecast,resolve,mule)'
+        default: 'forecast,resolve,mule'
+concurrency: pipeline
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: node pipeline/run.js --only=${{ github.event.inputs.only || 'forecast,resolve,mule' }}
+        env:
+          TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
+          TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          RESOLUTION_MODE: ${{ vars.RESOLUTION_MODE || 'auto' }}
+      - run: npm run verify
+        env:
+          TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
+          TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
